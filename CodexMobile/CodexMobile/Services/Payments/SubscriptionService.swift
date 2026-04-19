@@ -103,19 +103,32 @@ final class SubscriptionService {
     }
 
     var remainingFreeSendAttempts: Int {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return .max
+        }
         max(0, Self.freeSendLimit - freeSendCount)
     }
 
     var hasFreeSendAccess: Bool {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return true
+        }
         freeSendCount < Self.freeSendLimit
     }
 
     var hasAppAccess: Bool {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return true
+        }
         hasProAccess || hasFreeSendAccess
     }
 
     // Counts a valid send attempt for free users even if the turn later fails.
     func consumeFreeSendAttemptIfNeeded() {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return
+        }
+
         guard !hasProAccess, freeSendCount < Self.freeSendLimit else {
             return
         }
@@ -126,6 +139,13 @@ final class SubscriptionService {
 
     // Bootstraps subscription state once at launch or from the recovery retry action.
     func bootstrap() async {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            bootstrapState = .ready
+            hasProAccess = true
+            hasCachedOptimisticAccess = true
+            return
+        }
+
         guard !isBootstrapping else {
             return
         }
@@ -159,6 +179,11 @@ final class SubscriptionService {
 
     // Refreshes the current subscription state without re-entering the blocking bootstrap UI.
     func refreshCustomerInfoSilently() async {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            bootstrapState = .ready
+            return
+        }
+
         guard !isBootstrapping, bootstrapState != .loading else {
             return
         }
@@ -179,6 +204,13 @@ final class SubscriptionService {
 
     // Reads the current RevenueCat offerings and normalizes the package list for SwiftUI.
     func loadOfferings() async {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            packageOptions = []
+            currentOffering = nil
+            bootstrapState = .ready
+            return
+        }
+
         startCustomerInfoObserverIfConfigured()
         isLoading = true
         lastErrorMessage = nil
@@ -190,6 +222,10 @@ final class SubscriptionService {
 
     // Starts a purchase flow for the selected package and refreshes entitlements on success.
     func purchase(_ option: SubscriptionPackageOption) async {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return
+        }
+
         guard !isPurchasing else {
             return
         }
@@ -225,6 +261,10 @@ final class SubscriptionService {
 
     // Restores store purchases and then re-checks the Pro entitlement state.
     func restorePurchases() async {
+        guard !AppEnvironment.isSelfHostedBuild else {
+            return
+        }
+
         guard !isRestoring else {
             return
         }
