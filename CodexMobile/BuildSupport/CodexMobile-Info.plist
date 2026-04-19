@@ -4,12 +4,12 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.emanueledipietro.CodexMobile.refresh</string>
+		<string>$(REMODEX_BG_REFRESH_IDENTIFIER)</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Remodex</string>
+	<string>$(REMODEX_APP_DISPLAY_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,10 +28,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.emanueledipietro.CodexMobile.auth</string>
+			<string>$(REMODEX_APP_BUNDLE_IDENTIFIER).auth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>phodex</string>
+				<string>$(REMODEX_CALLBACK_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
@@ -66,6 +66,8 @@
 	<string>$(PHODEX_CHATGPT_CALLBACK_SCHEME)</string>
 	<key>PHODEX_DEFAULT_RELAY_URL</key>
 	<string>$(PHODEX_DEFAULT_RELAY_URL)</string>
+	<key>REMODEX_SELF_HOSTED_BUILD</key>
+	<string>$(REMODEX_SELF_HOSTED_BUILD)</string>
 	<key>REVENUECAT_PUBLIC_API_KEY</key>
 	<string>$(REVENUECAT_PUBLIC_API_KEY)</string>
 	<key>REVENUECAT_ENTITLEMENT_NAME</key>
