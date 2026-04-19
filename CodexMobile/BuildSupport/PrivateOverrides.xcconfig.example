@@ -1,4 +1,11 @@
 // Copy this file to PrivateOverrides.xcconfig and keep the real values local.
 // Xcode will load the private file automatically when it exists.
 
+APPLE_DEVELOPMENT_TEAM =
+REMODEX_APP_BUNDLE_IDENTIFIER = io.zbw0520.remodexselfhost
+REMODEX_MENU_BAR_BUNDLE_IDENTIFIER = io.zbw0520.remodexselfhost.menubar
+REMODEX_TEST_BUNDLE_IDENTIFIER = io.zbw0520.remodexselfhost.tests
+REMODEX_UI_TEST_BUNDLE_IDENTIFIER = io.zbw0520.remodexselfhost.uitests
+REMODEX_APP_DISPLAY_NAME = Remodex SH
+REMODEX_CALLBACK_SCHEME = remodexselfhost
 PHODEX_DEFAULT_RELAY_URL =
