@@ -8,6 +8,7 @@ import Foundation
 
 enum AppEnvironment {
     private static let defaultRelayURLInfoPlistKey = "PHODEX_DEFAULT_RELAY_URL"
+    private static let selfHostedBuildInfoPlistKey = "REMODEX_SELF_HOSTED_BUILD"
     private static let revenueCatPublicAPIKeyInfoPlistKey = "REVENUECAT_PUBLIC_API_KEY"
     private static let revenueCatEntitlementNameInfoPlistKey = "REVENUECAT_ENTITLEMENT_NAME"
     private static let revenueCatDefaultOfferingIDInfoPlistKey = "REVENUECAT_DEFAULT_OFFERING_ID"
@@ -22,6 +23,12 @@ enum AppEnvironment {
             return infoURL
         }
         return defaultRelayURLString
+    }
+
+    static var isSelfHostedBuild: Bool {
+        resolvedString(forInfoPlistKey: selfHostedBuildInfoPlistKey)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased() == "yes"
     }
 
     // Reads the public RevenueCat key shipped with the client build.
